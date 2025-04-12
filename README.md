@@ -38,7 +38,7 @@
 
 1. Клонируйте репозиторий:
    ```bash
-   git clone [URL_РЕПОЗИТОРИЯ]
+   git clone https://github.com/1KELER1/lesha_-file_downloader.git
    cd Django-4-and-React-JS-18-File-Upload-and-Download
    ```
 
