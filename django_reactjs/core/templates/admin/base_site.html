@@ -1,0 +1,18 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    {% if user.profile.role == 'EDITOR' %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/editor_restrictions.css' %}">
+    {% endif %}
+{% endblock %}
+
+{% block bodyclass %}{{ block.super }} {% if user.profile.role == 'EDITOR' %}editor-user{% endif %}{% endblock %}
+
+{% block extrahead %}
+    {{ block.super }}
+    {% if user.profile.role == 'EDITOR' %}
+        <script type="text/javascript" src="{% static 'js/editor_restrictions.js' %}"></script>
+    {% endif %}
+{% endblock %} 

@@ -48,4 +48,24 @@
             <p>Нет доступных файлов.</p>
         {% endif %}
     </div>
+
+    {% if user.profile.role == 'EDITOR' %}
+    <script>
+        // Скрипт для скрытия опции "Администратор" в выпадающих списках для редакторов
+        document.addEventListener('DOMContentLoaded', function() {
+            // Найти все выпадающие списки ролей
+            var roleSelects = document.querySelectorAll('select[name*="role"]');
+            
+            roleSelects.forEach(function(select) {
+                // Найти опцию "Администратор" и скрыть её
+                for (var i = 0; i < select.options.length; i++) {
+                    if (select.options[i].value === 'ADMIN' || select.options[i].text === 'Администратор') {
+                        select.options[i].disabled = true;
+                        select.options[i].style.display = 'none';
+                    }
+                }
+            });
+        });
+    </script>
+    {% endif %}
 {% endblock %} 

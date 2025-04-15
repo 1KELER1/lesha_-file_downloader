@@ -1,0 +1,7 @@
+/* CSS стили для ограничения доступа редакторов */
+
+/* Скрываем опцию "Администратор" в выпадающих списках */
+.editor-user select[name*="role"] option[value="ADMIN"],
+.editor-user select[name*="role"] option:contains("Администратор") {
+    display: none !important;
+} 

@@ -126,6 +126,15 @@ class ProfileAdmin(admin.ModelAdmin):
             return qs.exclude(role='ADMIN')
         return qs
     
+    def formfield_for_choice_field(self, db_field, request, **kwargs):
+        # Ограничиваем выбор ролей для редакторов
+        if db_field.name == 'role' and hasattr(request.user, 'profile') and request.user.profile.role == 'EDITOR':
+            kwargs['choices'] = [
+                ('VISITOR', 'Посетитель'),
+                ('EDITOR', 'Редактор')
+            ]
+        return super().formfield_for_choice_field(db_field, request, **kwargs)
+    
     def has_change_permission(self, request, obj=None):
         # Суперадмины могут менять все профили
         if request.user.is_superuser:

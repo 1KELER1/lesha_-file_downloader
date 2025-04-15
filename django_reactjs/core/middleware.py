@@ -38,3 +38,38 @@ class RoleMiddleware(MiddlewareMixin):
             return HttpResponseForbidden("У вас недостаточно прав для доступа к админ-панели")
             
         return None 
+
+class EditorRoleRestrictionMiddleware(MiddlewareMixin):
+    """
+    Middleware для ограничения доступа редакторов к роли администратора.
+    """
+    
+    def process_response(self, request, response):
+        # Проверяем только для авторизованных пользователей-редакторов
+        if request.user.is_authenticated and hasattr(request.user, 'profile') and request.user.profile.role == 'EDITOR':
+            # Если страница - HTML и в ней есть выпадающий список ролей
+            if 'text/html' in response.get('Content-Type', '') and b'<select' in response.content:
+                # Добавляем JavaScript в конец страницы для скрытия опции "Администратор"
+                script = """
+                <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Найти все выпадающие списки ролей
+                    var roleSelects = document.querySelectorAll('select[name*="role"]');
+                    
+                    roleSelects.forEach(function(select) {
+                        // Найти опцию "Администратор" и скрыть её
+                        for (var i = 0; i < select.options.length; i++) {
+                            if (select.options[i].value === 'ADMIN' || select.options[i].text === 'Администратор') {
+                                select.options[i].disabled = true;
+                                select.options[i].style.display = 'none';
+                            }
+                        }
+                    });
+                });
+                </script>
+                """
+                
+                # Вставляем скрипт перед закрывающим тегом body
+                response.content = response.content.replace(b'</body>', script.encode('utf-8') + b'</body>')
+        
+        return response 

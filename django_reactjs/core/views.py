@@ -69,6 +69,12 @@ def promote_to_editor(request, pk):
             if hasattr(user, 'profile') and user.profile.role != 'VISITOR':
                 return Response({"error": "Редакторы могут повышать только обычных пользователей"},
                                status=status.HTTP_403_FORBIDDEN)
+                               
+            # Редакторы могут только повышать до роли редактора, но не администратора
+            requested_role = request.data.get('role', 'EDITOR')
+            if requested_role == 'ADMIN':
+                return Response({"error": "Редакторы не могут назначать роль администратора"},
+                                status=status.HTTP_403_FORBIDDEN)
         
         # Даем пользователю права доступа к админке
         user.is_staff = True
@@ -76,7 +82,12 @@ def promote_to_editor(request, pk):
         
         # Устанавливаем роль EDITOR
         if hasattr(user, 'profile'):
-            user.profile.role = 'EDITOR'
+            # Если текущий пользователь администратор, он может назначить любую роль
+            if request.user.is_superuser or (hasattr(request.user, 'profile') and request.user.profile.role == 'ADMIN'):
+                user.profile.role = request.data.get('role', 'EDITOR')
+            else:
+                # Иначе можно назначить только роль EDITOR
+                user.profile.role = 'EDITOR'
             user.profile.save()
         
         return Response({"status": "success", "message": f"Пользователь {user.username} повышен до редактора"})
