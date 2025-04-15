@@ -86,4 +86,46 @@ def promote_to_editor(request, user_id):
     profile.role = 'EDITOR'
     profile.save()
     
+    return redirect('user_list')
+
+@login_required
+def delete_file(request, file_id):
+    """Удаление файла"""
+    if not is_editor(request.user):
+        return HttpResponseForbidden("Доступ запрещен. Требуется роль редактора.")
+    
+    file = get_object_or_404(Files, id=file_id)
+    
+    # Проверяем, является ли пользователь владельцем файла или редактором
+    if file.owner == request.user or request.user.profile.role == 'ADMIN':
+        file.delete()
+    else:
+        return HttpResponseForbidden("Вы можете удалять только свои файлы.")
+    
+    return redirect('file_list')
+
+@login_required
+def delete_user(request, user_id):
+    """Удаление пользователя"""
+    if not is_editor(request.user):
+        return HttpResponseForbidden("Доступ запрещен. Требуется роль редактора.")
+    
+    user_to_delete = get_object_or_404(User, id=user_id)
+    
+    # Нельзя удалить себя
+    if user_to_delete == request.user:
+        return HttpResponseForbidden("Вы не можете удалить свою учетную запись.")
+    
+    # Нельзя удалить админа
+    if user_to_delete.is_superuser:
+        return HttpResponseForbidden("Вы не можете удалить администратора.")
+    
+    # Редактор может удалять только обычных пользователей
+    if hasattr(request.user, 'profile') and request.user.profile.role == 'EDITOR':
+        if hasattr(user_to_delete, 'profile') and user_to_delete.profile.role == 'EDITOR':
+            return HttpResponseForbidden("Вы не можете удалить другого редактора.")
+    
+    # Удаляем пользователя
+    user_to_delete.delete()
+    
     return redirect('user_list') 

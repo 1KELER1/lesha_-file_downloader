@@ -31,11 +31,14 @@ class FilesViewSet(viewsets.ModelViewSet):
         file.save()
         return Response({'status': 'success', 'is_public': file.is_public})
 
-    @action(detail=True, methods=['delete'], permission_classes=[IsAdmin])
+    @action(detail=True, methods=['delete'], permission_classes=[IsAuthenticated])
     def delete_file(self, request, pk=None):
         file = self.get_object()
-        file.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        # Проверяем, является ли пользователь владельцем файла или администратором
+        if file.owner == request.user or (hasattr(request.user, 'profile') and request.user.profile.role == 'ADMIN'):
+            file.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response({"error": "У вас нет прав для удаления этого файла"}, status=status.HTTP_403_FORBIDDEN)
 
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()

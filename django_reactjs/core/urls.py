@@ -5,7 +5,7 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
-from .editor_views import editor_dashboard, file_list, user_list, toggle_file_public, promote_to_editor as editor_promote
+from .editor_views import editor_dashboard, file_list, user_list, toggle_file_public, promote_to_editor as editor_promote, delete_file, delete_user
 
 router = DefaultRouter()
 router.register('files', FilesViewSet, basename='files')
@@ -23,5 +23,7 @@ urlpatterns = [
     path('editor/files/', file_list, name='file_list'),
     path('editor/users/', user_list, name='user_list'),
     path('editor/files/<int:file_id>/toggle-public/', toggle_file_public, name='toggle_file_public'),
+    path('editor/files/<int:file_id>/delete/', delete_file, name='delete_file'),
     path('editor/users/<int:user_id>/promote/', editor_promote, name='editor_promote'),
+    path('editor/users/<int:user_id>/delete/', delete_user, name='delete_user'),
 ]

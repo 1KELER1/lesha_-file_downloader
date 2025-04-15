@@ -82,6 +82,34 @@ function UploadFile() {
         })
     }
 
+    const deleteFile = (fileId) => {
+        if (!window.confirm('Вы уверены, что хотите удалить этот файл?')) {
+            return;
+        }
+        
+        axios.delete(`${api}/files/${fileId}/delete_file/`, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+            }
+        }).then(response => {
+            setstatus('Файл успешно удален');
+            getFiles(); // Обновляем список после удаления
+        }).catch(error => {
+            console.log(error);
+            if (error.response) {
+                if (error.response.status === 401) {
+                    navigate('/login');
+                } else if (error.response.status === 403) {
+                    setstatus('У вас нет прав для удаления этого файла');
+                } else {
+                    setstatus('Ошибка при удалении файла');
+                }
+            } else {
+                setstatus('Ошибка при удалении файла');
+            }
+        });
+    };
+
     const forceDownload = (response, title, originalFileName) => {
         console.log(response)
         const url = window.URL.createObjectURL(new Blob([response.data]))
@@ -186,10 +214,17 @@ function UploadFile() {
                             {files.map(file => {
                                 const fileName = file.pdf ? file.pdf.split('/').pop() : '';
                                 return (
-                                    <tr>
+                                    <tr key={file.id}>
                                         <td>{fileName}</td>
-                                        <td><a href="" target="_blank"></a>
-                                            <button onClick={() => downloadWithAxios(file.pdf, file.id)} className="btn btn-success">Скачать</button>
+                                        <td>
+                                            <button onClick={() => downloadWithAxios(file.pdf, file.id)} className="btn btn-success me-2">Скачать</button>
+                                            
+                                            {/* Показываем кнопку удаления, если пользователь - владелец файла */}
+                                            {user && (user.id === (file.owner?.id) || (user.profile?.role === 'ADMIN')) && (
+                                                <button onClick={() => deleteFile(file.id)} className="btn btn-danger">
+                                                    Удалить
+                                                </button>
+                                            )}
                                         </td>
                                     </tr>
                                 )
