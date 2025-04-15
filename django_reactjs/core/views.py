@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import Files, User, Profile
 from rest_framework import viewsets, generics, permissions, status
-from rest_framework.decorators import action
+from rest_framework.decorators import action, api_view, permission_classes
 from rest_framework.response import Response
 from .serializers import FilesSerializer, UserSerializer, RegisterSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -49,3 +49,56 @@ class UserDetailView(generics.RetrieveAPIView):
 
     def get_object(self):
         return self.request.user
+
+@api_view(['POST'])
+@permission_classes([IsEditorOrAdmin])
+def promote_to_editor(request, pk):
+    """
+    Повышение пользователя до редактора.
+    Только администраторы и редакторы могут вызывать этот метод.
+    """
+    try:
+        user = User.objects.get(pk=pk)
+        
+        # Проверяем, имеет ли текущий пользователь право повысить роль
+        if hasattr(request.user, 'profile') and request.user.profile.role == 'EDITOR':
+            # Редакторы могут повышать только обычных пользователей
+            if hasattr(user, 'profile') and user.profile.role != 'VISITOR':
+                return Response({"error": "Редакторы могут повышать только обычных пользователей"},
+                               status=status.HTTP_403_FORBIDDEN)
+        
+        # Даем пользователю права доступа к админке
+        user.is_staff = True
+        user.save()
+        
+        # Устанавливаем роль EDITOR
+        if hasattr(user, 'profile'):
+            user.profile.role = 'EDITOR'
+            user.profile.save()
+        
+        return Response({"status": "success", "message": f"Пользователь {user.username} повышен до редактора"})
+    except User.DoesNotExist:
+        return Response({"error": "Пользователь не найден"}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['POST'])
+@permission_classes([IsAdmin])
+def demote_to_visitor(request, pk):
+    """
+    Понижение пользователя до обычного пользователя.
+    Только администраторы могут вызывать этот метод.
+    """
+    try:
+        user = User.objects.get(pk=pk)
+        
+        # Убираем права доступа к админке
+        user.is_staff = False
+        user.save()
+        
+        # Устанавливаем роль VISITOR
+        if hasattr(user, 'profile'):
+            user.profile.role = 'VISITOR'
+            user.profile.save()
+        
+        return Response({"status": "success", "message": f"Пользователь {user.username} понижен до посетителя"})
+    except User.DoesNotExist:
+        return Response({"error": "Пользователь не найден"}, status=status.HTTP_404_NOT_FOUND)

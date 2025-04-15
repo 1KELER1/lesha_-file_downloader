@@ -1,0 +1,51 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Панель управления редактора{% endblock %}
+
+{% block content %}
+    <h2>Добро пожаловать, {{ user.username }}!</h2>
+    
+    <div class="dashboard-summary">
+        <h3>Сводка</h3>
+        <p>Всего файлов: {{ files.count }}</p>
+        <p>Всего пользователей: {{ users.count }}</p>
+    </div>
+    
+    <div class="dashboard-actions">
+        <h3>Действия</h3>
+        <ul>
+            <li><a href="{% url 'file_list' %}" class="btn">Управление файлами</a></li>
+            <li><a href="{% url 'user_list' %}" class="btn">Управление пользователями</a></li>
+            <li><a href="/admin/" target="_blank" class="btn">Открыть админ-панель</a></li>
+        </ul>
+    </div>
+    
+    <div class="recent-files">
+        <h3>Последние файлы</h3>
+        {% if files %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Файл</th>
+                        <th>Владелец</th>
+                        <th>Публичный</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for file in files|slice:":5" %}
+                        <tr>
+                            <td>{{ file.id }}</td>
+                            <td>{{ file.pdf }}</td>
+                            <td>{{ file.owner|default:"Без владельца" }}</td>
+                            <td>{% if file.is_public %}Да{% else %}Нет{% endif %}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="{% url 'file_list' %}" class="btn">Показать все файлы</a>
+        {% else %}
+            <p>Нет доступных файлов.</p>
+        {% endif %}
+    </div>
+{% endblock %} 

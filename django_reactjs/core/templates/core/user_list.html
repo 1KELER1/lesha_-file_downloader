@@ -1,0 +1,50 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Управление пользователями{% endblock %}
+
+{% block content %}
+    <h2>Управление пользователями</h2>
+    
+    {% if users %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Имя пользователя</th>
+                    <th>Email</th>
+                    <th>Роль</th>
+                    <th>Админ-доступ</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>
+                            {% if user.profile %}
+                                {{ user.profile.get_role_display }}
+                            {% else %}
+                                Нет профиля
+                            {% endif %}
+                        </td>
+                        <td>{% if user.is_staff %}Да{% else %}Нет{% endif %}</td>
+                        <td>
+                            {% if user.profile and user.profile.role == 'VISITOR' %}
+                                <a href="{% url 'editor_promote' user.id %}" class="btn">Сделать редактором</a>
+                            {% endif %}
+                            <a href="/admin/auth/user/{{ user.id }}/change/" target="_blank" class="btn">Редактировать</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Нет пользователей.</p>
+    {% endif %}
+    
+    <a href="/admin/auth/user/add/" target="_blank" class="btn">Добавить нового пользователя</a>
+    <a href="{% url 'editor_dashboard' %}" class="btn">Вернуться на главную</a>
+{% endblock %} 
