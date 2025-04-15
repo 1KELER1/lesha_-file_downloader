@@ -1,46 +1,44 @@
 from rest_framework import serializers
-from .models import Files
-from django.contrib.auth.models import User
+from .models import Files, Profile, User
 from django.contrib.auth.password_validation import validate_password
 
 
-class FilesSerializer(serializers.ModelSerializer):
+class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Files
-        fields = ['id','pdf']
+        model = Profile
+        fields = ('id', 'role')
+
 
 class UserSerializer(serializers.ModelSerializer):
+    profile = ProfileSerializer(read_only=True)
+    
     class Meta:
         model = User
-        fields = ('id', 'username', 'email')
+        fields = ('id', 'username', 'email', 'profile')
 
 
 class RegisterSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
-    password2 = serializers.CharField(write_only=True, required=True)
+    password = serializers.CharField(write_only=True)
 
     class Meta:
         model = User
-        fields = ('username', 'password', 'password2', 'email', 'first_name', 'last_name')
-        extra_kwargs = {
-            'first_name': {'required': False},
-            'last_name': {'required': False},
-            'email': {'required': True}
-        }
-
-    def validate(self, attrs):
-        if attrs['password'] != attrs['password2']:
-            raise serializers.ValidationError({"password": "Пароли не совпадают"})
-        return attrs
+        fields = ('username', 'email', 'password')
+        extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
-        user = User.objects.create(
+        user = User.objects.create_user(
             username=validated_data['username'],
             email=validated_data['email'],
-            first_name=validated_data.get('first_name', ''),
-            last_name=validated_data.get('last_name', '')
+            password=validated_data['password']
         )
-        user.set_password(validated_data['password'])
-        user.save()
         return user
+
+
+class FilesSerializer(serializers.ModelSerializer):
+    owner = UserSerializer(read_only=True)
+
+    class Meta:
+        model = Files
+        fields = ('id', 'pdf', 'owner', 'is_public')
+        read_only_fields = ('owner',)
         

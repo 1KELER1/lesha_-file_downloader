@@ -31,12 +31,16 @@ INSTALLED_APPS = [
     'core',
     'rest_framework',
     'corsheaders',
+    'rest_framework_simplejwt',
 ]
 
-# Добавляем настройки REST framework с JWT
+# Добавляем настройки REST framework с JWT и правами доступа
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
     ),
 }
 
@@ -114,7 +118,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'UTC'
 
