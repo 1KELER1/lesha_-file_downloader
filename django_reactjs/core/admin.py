@@ -70,6 +70,13 @@ class CustomUserAdmin(UserAdmin):
             profile.role = 'VISITOR'
             profile.save()
 
+    def has_module_permission(self, request):
+        # Проверяем доступ к модулю пользователей
+        # Редакторы должны иметь доступ
+        if hasattr(request.user, 'profile') and request.user.profile.role == 'EDITOR':
+            return True
+        return super().has_module_permission(request)
+
     def has_view_permission(self, request, obj=None):
         # Редакторы всегда могут просматривать пользователей
         if hasattr(request.user, 'profile') and request.user.profile.role == 'EDITOR':
@@ -98,6 +105,12 @@ class FilesAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
         # То же, что и для редактирования
         return self.has_change_permission(request, obj)
+
+    def has_module_permission(self, request):
+        # Редакторы всегда должны иметь доступ к модулю файлов
+        if hasattr(request.user, 'profile') and request.user.profile.role == 'EDITOR':
+            return True
+        return super().has_module_permission(request)
 
     def has_view_permission(self, request, obj=None):
         # Редакторы всегда могут просматривать файлы
@@ -160,6 +173,12 @@ class ProfileAdmin(admin.ModelAdmin):
             if obj.role == 'ADMIN':
                 obj.role = 'EDITOR'  # Понижаем до редактора
         super().save_model(request, obj, form, change)
+
+    def has_module_permission(self, request):
+        # Редакторы всегда должны иметь доступ к модулю профилей
+        if hasattr(request.user, 'profile') and request.user.profile.role == 'EDITOR':
+            return True
+        return super().has_module_permission(request)
 
     def has_view_permission(self, request, obj=None):
         # Редакторы всегда могут просматривать профили

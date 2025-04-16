@@ -26,11 +26,19 @@ class RoleMiddleware(MiddlewareMixin):
             # Проверяем роль пользователя - должен быть редактор или админ
             try:
                 if hasattr(request.user, 'profile'):
+                    # Отладочная информация
+                    print(f"User: {request.user.username}, Role: {request.user.profile.role}, Staff: {request.user.is_staff}")
                     if request.user.profile.role in ['EDITOR', 'ADMIN']:
+                        # Редакторы и админы имеют доступ
                         return None
+                    else:
+                        # У пользователя есть профиль, но неверная роль
+                        print(f"Access denied: user {request.user.username} has role {request.user.profile.role}")
+                else:
+                    # У пользователя нет профиля
+                    print(f"Access denied: user {request.user.username} has no profile")
             except Exception as e:
-                # Если произошла ошибка, разрешаем доступ is_staff пользователям
-                # для отладки и чтобы избежать блокировки легитимных пользователей
+                # Если произошла ошибка, логируем и пропускаем для отладки
                 print(f"Ошибка при проверке профиля: {str(e)}")
                 return None
                     
