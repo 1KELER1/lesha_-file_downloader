@@ -9,13 +9,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-jdeyzx1zzpteu^^ixg*dinazl@$tr_qo_s*34n94ac1dys(gk0'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = []
+# Для продакшена добавьте:
+# CSRF_COOKIE_SECURE = False  # True если используется HTTPS
+# SESSION_COOKIE_SECURE = False  # True если используется HTTPS
+# SECURE_SSL_REDIRECT = False  # True если используется HTTPS
 
 
 # Application definition
@@ -134,12 +133,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-# Добавляем настройки для статических файлов
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'core/static'),
-]
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -152,3 +146,9 @@ MEDIA_URL = '/media/'
 
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+try:
+    from  .local_setings import *
+except ImportError:
+    from  .prod_settings import *
+
