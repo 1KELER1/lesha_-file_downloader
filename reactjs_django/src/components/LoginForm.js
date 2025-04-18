@@ -8,7 +8,8 @@ function LoginForm() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
   
-  const api = 'http://127.0.0.1:8000';
+  // Используем переменную окружения для API URL
+  const api = process.env.REACT_APP_API_URL || '';
 
   const handleSubmit = async (e) => {
     e.preventDefault();

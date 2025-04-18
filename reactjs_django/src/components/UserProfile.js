@@ -7,7 +7,8 @@ function UserProfile() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   
-  const api = 'http://127.0.0.1:8000';
+  // Используем переменную окружения для API URL
+  const api = process.env.REACT_APP_API_URL || '';
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -36,7 +37,7 @@ function UserProfile() {
     };
 
     fetchUserData();
-  }, [navigate]);
+  }, [navigate, api]);
 
   const handleLogout = () => {
     localStorage.removeItem('access_token');

@@ -4,14 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f1071d2-3a54-4c0c-8248-a31beb812419" name="Changes" comment="послдение изменения распределение прав">
+    <list default="true" id="5f1071d2-3a54-4c0c-8248-a31beb812419" name="Changes" comment="настройки с деплоем">
+      <change afterPath="$PROJECT_DIR$/django_reactjs/django_reactjs/prod_settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/django_reactjs/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/django_reactjs/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_reactjs/conf/examplessupervisor.conf" beforeDir="false" afterPath="$PROJECT_DIR$/django_reactjs/conf/examplessupervisor.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reactjs_django/.env" beforeDir="false" afterPath="$PROJECT_DIR$/reactjs_django/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reactjs_django/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/reactjs_django/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reactjs_django/src/components/LoginForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/reactjs_django/src/components/LoginForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reactjs_django/src/components/RegisterForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/reactjs_django/src/components/RegisterForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reactjs_django/src/components/UploadFile.js" beforeDir="false" afterPath="$PROJECT_DIR$/reactjs_django/src/components/UploadFile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reactjs_django/src/components/UserProfile.js" beforeDir="false" afterPath="$PROJECT_DIR$/reactjs_django/src/components/UserProfile.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -36,18 +50,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.manage.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/учёба/текущее/интерет лабы/Курсовая/лёшина/2v/lesha_-file_downloader/django_reactjs/manage.py&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.manage.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Shell Script.Unnamed.executor": "Run",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "E:/учёба/текущее/интерет лабы/Курсовая/лёшина/2v/lesha_-file_downloader/reactjs_django",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
-  <component name="RunManager">
+}]]></component>
+  <component name="RunManager" selected="Shell Script.Unnamed">
     <configuration name="manage" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="lesha_-file_downloader" />
       <option name="ENV_FILES" value="" />
@@ -71,6 +86,25 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="Unnamed" type="ShConfigurationType" nameIsGenerated="true">
+      <option name="SCRIPT_TEXT" value="npm start " />
+      <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
+      <option name="SCRIPT_PATH" value="" />
+      <option name="SCRIPT_OPTIONS" value="" />
+      <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="false" />
+      <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$/reactjs_django" />
+      <option name="INDEPENDENT_INTERPRETER_PATH" value="true" />
+      <option name="INTERPRETER_PATH" value="powershell.exe" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="EXECUTE_IN_TERMINAL" value="true" />
+      <option name="EXECUTE_SCRIPT_FILE" value="false" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.manage" />
+      <item itemvalue="Shell Script.Unnamed" />
+    </list>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -160,7 +194,23 @@
       <option name="project" value="LOCAL" />
       <updated>1744766771229</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="окончальное изменение">
+      <option name="closed" value="true" />
+      <created>1744767801112</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1744767801112</updated>
+    </task>
+    <task id="LOCAL-00011" summary="настройки с деплоем">
+      <option name="closed" value="true" />
+      <created>1744975178593</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1744975178593</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -182,6 +232,8 @@
     <MESSAGE value="добавление нормальных редакторов" />
     <MESSAGE value="кнопка удалить у пользователей" />
     <MESSAGE value="послдение изменения распределение прав" />
-    <option name="LAST_COMMIT_MESSAGE" value="послдение изменения распределение прав" />
+    <MESSAGE value="окончальное изменение" />
+    <MESSAGE value="настройки с деплоем" />
+    <option name="LAST_COMMIT_MESSAGE" value="настройки с деплоем" />
   </component>
 </project>

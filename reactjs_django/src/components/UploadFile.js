@@ -9,7 +9,9 @@ function UploadFile() {
     const [user, setUser] = useState(null)
     const navigate = useNavigate()
 
-    let api = 'http://127.0.0.1:8000/api'
+    // Используем переменную окружения для API URL
+    const apiBase = process.env.REACT_APP_API_URL || '';
+    const api = `${apiBase}/api`;
 
     useEffect(() => {
         const token = localStorage.getItem('access_token');
@@ -22,7 +24,7 @@ function UploadFile() {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         
         // Получаем информацию о пользователе
-        axios.get(`${api.replace('/api', '')}/api/user/`).then(
+        axios.get(`${apiBase}/api/user/`).then(
             response => {
                 setUser(response.data);
                 // После получения информации о пользователе загружаем файлы
@@ -34,7 +36,7 @@ function UploadFile() {
             localStorage.removeItem('refresh_token');
             navigate('/login');
         });
-    }, [navigate]);
+    }, [navigate, apiBase]);
 
     const saveFile = () => {
         console.log('Button clicked')
