@@ -86,10 +86,10 @@ function Header() {
         <div className="py-3">
           <h4 className="mb-3 text-primary">Название, категория работы, автор, руководитель</h4>
           <div className="card-text">
-            <p><strong>Название:</strong> Система загрузки и хранения файлов</p>
+            <p><strong>Название:</strong> Разработка лендинг-страницы центра экологической экспертизы ФГБОУ ВО «АнГТУ». UI/UX дизайн</p>
             <p><strong>Категория работы:</strong> Веб-приложение</p>
-            <p><strong>Автор:</strong> Студент</p>
-            <p><strong>Руководитель:</strong> Преподаватель</p>
+            <p><strong>Автор:</strong> Рыбин А.В.</p>
+            <p><strong>Руководитель:</strong> Головкова Е.А.</p>
           </div>
         </div>
       )
@@ -101,15 +101,30 @@ function Header() {
         <div className="py-3">
           <h4 className="mb-3 text-primary">Цели, задачи работы, план работы</h4>
           <div className="card-text">
-            <p><strong>Цель:</strong> Разработка системы для загрузки и хранения файлов с авторизацией пользователей</p>
+            <p><strong>Цель:</strong> Разработка фронтенда</p>
             <p><strong>Задачи:</strong></p>
             <ul className="list-group list-group-flush mb-3">
-              <li className="list-group-item">Разработка интерфейса пользователя</li>
-              <li className="list-group-item">Реализация системы авторизации</li>
-              <li className="list-group-item">Создание механизма загрузки файлов</li>
-              <li className="list-group-item">Разработка API для работы с файлами</li>
+              <li className="list-group-item">Анализ целевой аудитории</li>
+              <li className="list-group-item">Изучение конкурентной среды</li>
+              <li className="list-group-item">Формирование структуры лендинг-страницы:</li>
+              <li className="list-group-item">Создание прототипа</li>
+              <li className="list-group-item">Разработка UI-дизайна:</li>
+              <li className="list-group-item">Оптимизация UX</li>
+              <li className="list-group-item">Верстка и программирование</li>
+              <li className="list-group-item">Тестирование</li>
+              <li className="list-group-item">Запуск и анализ результатов</li>
             </ul>
-            <p><strong>План работы:</strong> По этапам разработки системы</p>
+             <p><strong>План работы:</strong></p>
+            <ul className="list-group list-group-flush mb-3">
+              <li className="list-group-item">1. Подготовительный этап</li>
+              <li className="list-group-item">2. Исследование</li>
+              <li className="list-group-item">3. Проектирование</li>
+              <li className="list-group-item">4. Концепт</li>
+              <li className="list-group-item">5. Создание прототипа</li>
+              <li className="list-group-item">6. Тестирование</li>
+              <li className="list-group-item">7. Публикация</li>
+              <li className="list-group-item">8. Анализ и улучшение</li>
+            </ul>
           </div>
         </div>
       )
@@ -128,8 +143,11 @@ function Header() {
                     <h5 className="mb-0">Теоретические результаты</h5>
                   </div>
                   <ul className="list-group list-group-flush">
-                    <li className="list-group-item">Изучение архитектуры SPA приложений</li>
-                    <li className="list-group-item">Освоение методов взаимодействия React с Django</li>
+                    <li className="list-group-item">Изучение принципов создания лендинг-страниц</li>
+                    <li className="list-group-item">Формирование знаний о UI/UX дизайне</li>
+                    <li className="list-group-item">Понимание пользовательских сценариев</li>
+                    <li className="list-group-item">Овладение современными подходами к адаптивному дизайну</li>
+                    <li className="list-group-item">Аналитика эффективности лендингов</li>
                   </ul>
                 </div>
               </div>
@@ -139,9 +157,11 @@ function Header() {
                     <h5 className="mb-0">Практические результаты</h5>
                   </div>
                   <ul className="list-group list-group-flush">
-                    <li className="list-group-item">Работающая система загрузки файлов</li>
-                    <li className="list-group-item">Реализованная система авторизации</li>
-                    <li className="list-group-item">Пользовательский интерфейс на React</li>
+                    <li className="list-group-item">Разработана лендинг-страница</li>
+                    <li className="list-group-item">Создан полноценный UI/UX дизайн</li>
+                    <li className="list-group-item">Реализована адаптивная верстка лендинга</li>
+                    <li className="list-group-item">Интегрированы интерактивные элементы</li>
+                    <li className="list-group-item">Произведено тестирование и оптимизация страницы</li>
                   </ul>
                 </div>
               </div>
