@@ -4,12 +4,11 @@ import './index.css';
 import '../src/resources/css/bootstrap.min.css'
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {Route, BrowserRouter, Routes} from 'react-router-dom';
+import {Route, BrowserRouter, Routes, Navigate} from 'react-router-dom';
 import UploadFile from './components/UploadFile'
-import LoginForm from './components/LoginForm'
-import RegisterForm from './components/RegisterForm'
 import UserProfile from './components/UserProfile'
 import ProtectedRoute from './components/ProtectedRoute'
+import Header from './components/Header';
 
 // Инициализируем axios с токеном авторизации, если он есть
 import axios from 'axios';
@@ -23,8 +22,7 @@ function Router(){
     <BrowserRouter>
       <Routes>
         {/* Публичные маршруты */}
-        <Route path="/login" element={<LoginForm />} />
-        <Route path="/register" element={<RegisterForm />} />
+        <Route path="/welcome" element={<Header />} />
         
         {/* Защищенные маршруты */}
         <Route element={<ProtectedRoute />}>
@@ -32,6 +30,9 @@ function Router(){
           <Route path="/app" element={<App />} />
           <Route path="/profile" element={<UserProfile />} />
         </Route>
+        
+        {/* Перенаправление */}
+        <Route path="*" element={<Navigate to="/welcome" replace />} />
       </Routes>
     </BrowserRouter>
   );
